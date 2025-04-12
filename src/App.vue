@@ -1,3 +1,10 @@
+<script setup>
+  import AppHeader from '@/components/navigation/AppHeader.vue'
+</script>
+
 <template>
-  <RouterView />
+  <div>
+    <app-header />
+    <router-view />
+  </div>
 </template>
