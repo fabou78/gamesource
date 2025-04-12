@@ -3,6 +3,10 @@
   import * as yup from 'yup'
   import { ref } from 'vue'
 
+  /// Toast
+  import { useToast } from 'vue-toast-notification'
+  const $toast = useToast()
+
   /// AUTH store
   import { useUserStore } from '@/stores/user'
   const userStore = useUserStore()
@@ -22,6 +26,18 @@
       userStore.signIn(values)
     }
   }
+
+  /// Subscribe to an error
+  userStore.$onAction(({ name, after, onError }) => {
+    if (name === 'register' || name === 'signIn') {
+      after(() => {
+        $toast.success('Welcome back!')
+      })
+      onError((error) => {
+        $toast.error(error.message)
+      })
+    }
+  })
 </script>
 
 <template>

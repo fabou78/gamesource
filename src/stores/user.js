@@ -7,6 +7,7 @@ import router from '@/router'
 import { AUTH, FireDB } from '@/utils/firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { getDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
+import errorCodes from '@/utils/fbcodes'
 
 const DEFAULT_USER = {
   uid: null,
@@ -36,7 +37,7 @@ export const useUserStore = defineStore('user', {
         }
         return userProfile.data()
       } catch (error) {
-        throw new Error(error.code)
+        throw new Error(errorCodes(error.code))
       }
     },
     async signIn(formData) {
@@ -55,7 +56,7 @@ export const useUserStore = defineStore('user', {
         /// Redirect user
         router.push({ name: 'dashboard' })
       } catch (error) {
-        throw new Error(error.code)
+        throw new Error(errorCodes(error.code))
       } finally {
         this.loading = false
       }
@@ -84,7 +85,7 @@ export const useUserStore = defineStore('user', {
         /// Redirect user
         router.push({ name: 'dashboard' })
       } catch (error) {
-        throw new Error(error.code)
+        throw new Error(errorCodes(error.code))
       } finally {
         this.loading = false
       }
