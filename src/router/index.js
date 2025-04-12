@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '@/components/home/index.vue'
-import Signin from '@/components/user/Signin.vue'
+import Signin from '@/components/user/SigninResgister.vue'
 
 //Dashboard routes
 import Dashboard from '@/components/user/dashboard/index.vue'

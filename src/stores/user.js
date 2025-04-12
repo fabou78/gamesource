@@ -20,10 +20,44 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     loading: false,
     user: DEFAULT_USER,
-    auth: false,
+    isAuthenticated: false,
   }),
   getters: {},
   actions: {
-    async register(formData) {},
+    setUserState(user) {
+      console.log(this.user, user)
+      this.user = { ...user, ...this.user }
+      console.log(this.user)
+      this.isAuthenticated = true
+    },
+    async register(formData) {
+      try {
+        this.loading = true
+        /// Register User
+        const response = await createUserWithEmailAndPassword(
+          AUTH,
+          formData.email,
+          formData.password,
+        )
+
+        /// Add user to DB
+        const newUser = {
+          uid: response.user.uid,
+          email: response.user.email,
+          isAdmin: false,
+        }
+        await setDoc(doc(FireDB, 'users', response.user.uid), newUser)
+
+        /// Update local state
+        this.setUserState(newUser)
+
+        /// Redirect user
+        router.push({ name: 'dashboard' })
+      } catch (error) {
+        throw new Error(error.code)
+      } finally {
+        this.loading = false
+      }
+    },
   },
 })

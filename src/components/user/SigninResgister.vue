@@ -15,13 +15,22 @@
 
   function onSubmit(values, { resetForm }) {
     console.log(values)
+    if (isResgister.value) {
+      // Register the user
+      userStore.register(values)
+    } else {
+      //sign in
+    }
   }
 </script>
 
 <template>
   <div class="signin_container">
     <!-- loader -->
-    <Form @submit="onSubmit" :validation-schema="formSchema">
+    <div class="text-center" v-show="userStore.loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
+    <Form @submit="onSubmit" :validation-schema="formSchema" v-show="!userStore.loading">
       <h1 v-text="!isResgister ? 'Sign in' : 'Register'"></h1>
       <div class="form-group">
         <Field name="email" :value="'fabrice@gmail.com'" v-slot="{ field, errors, errorMessage }">
