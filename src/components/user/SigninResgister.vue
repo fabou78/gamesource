@@ -14,12 +14,12 @@
   })
 
   function onSubmit(values, { resetForm }) {
-    console.log(values)
     if (isResgister.value) {
       // Register the user
       userStore.register(values)
     } else {
       //sign in
+      userStore.signIn(values)
     }
   }
 </script>
