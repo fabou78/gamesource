@@ -16,5 +16,4 @@
       </div>
     </div>
   </header>
-  >
 </template>
