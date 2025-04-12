@@ -3,6 +3,10 @@
   import * as yup from 'yup'
   import { ref } from 'vue'
 
+  /// AUTH store
+  import { useUserStore } from '@/stores/user'
+  const userStore = useUserStore()
+
   const isResgister = ref(false)
   const formSchema = yup.object({
     email: yup.string().required('The email is required').email('Not a valid email'),
