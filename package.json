@@ -11,6 +11,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tiptap/pm": "^2.11.7",
+    "@tiptap/starter-kit": "^2.11.7",
+    "@tiptap/vue-3": "^2.11.7",
     "firebase": "^10.14.1",
     "pinia": "^3.0.1",
     "vee-validate": "^4.12.4",

@@ -28,8 +28,8 @@ export const isAuthenticated = () => {
 }
 
 export const isLoggedIn = () => {
-  let user = AUTH.currentUser
-  console.log(user)
-  if (user) return '/user/dashboard'
+  // let user = AUTH.currentUser
+  // // console.log(user)
+  // if (user) return '/user/dashboard'
   return true
 }

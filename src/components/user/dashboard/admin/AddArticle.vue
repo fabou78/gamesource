@@ -2,10 +2,17 @@
   import { ref } from 'vue'
   import { Field, Form } from 'vee-validate'
 
-  const ratingArray = [0, 1, 2, 3, 4, 5]
+  import WYSIWYG from '@/utils/wysiwyg.vue'
 
-  const onSubmit = (values) => {
+  const ratingArray = [0, 1, 2, 3, 4, 5]
+  const veditor = ref('')
+
+  function onSubmit(values, { resetForm }) {
     console.log(values)
+  }
+
+  function updateEditor(value) {
+    veditor.value = value
   }
 </script>
 
@@ -51,9 +58,20 @@
         <div class="input_alert" v-if="errors.length !== 0">{{ errorMessage }}</div>
       </Field>
     </div>
+
     <!-- WYSIWYG -->
+    <div clas="mb-4">
+      <WYSIWYG @update="updateEditor" />
+      <Field name="editor" v-model="veditor" v-slot="{ field, errors, errorMessage }">
+        <input type="hidden" id="veditor" v-bind="field" />
+        <div class="input_alert" v-if="errors.length !== 0">
+          {{ errorMessage }}
+        </div>
+      </Field>
+    </div>
+
     <!-- 5-Raiting -->
-    <div class="mb-4">
+    <div class="my-4">
       <Field name="rating" value="Select a rating" v-slot="{ field, errors, errorMessage }">
         <select class="form-select" v-bind="field" :class="{ 'is-invalid': errors.length !== 0 }">
           <option value="Select a rating">Select a rating</option>
