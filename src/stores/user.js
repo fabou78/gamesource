@@ -41,8 +41,8 @@ export const useUserStore = defineStore('user', {
         /// Update local state
         this.setUserState(userData)
         return true
-      } catch (error) {
-        console.log(error)
+      } catch {
+        // console.log(error)
       }
     },
     async getUserProfile(uid) {
