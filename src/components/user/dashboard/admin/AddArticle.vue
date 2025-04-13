@@ -1,14 +1,35 @@
 <script setup>
   import { ref } from 'vue'
   import { Field, Form } from 'vee-validate'
+  import ArticleSchema from '@/components/user/dashboard/admin/schema'
 
   import WYSIWYG from '@/utils/wysiwyg.vue'
 
+  // Article store
+  import { useArticleStore } from '@/stores/articles'
+  const articleStore = useArticleStore()
+
+  // Toast
+  import { useToast } from 'vue-toast-notification'
+  const $toast = useToast()
+
+  const loading = ref(false)
   const ratingArray = [0, 1, 2, 3, 4, 5]
   const veditor = ref('')
 
   function onSubmit(values, { resetForm }) {
-    console.log(values)
+    loading.value = true
+    articleStore
+      .addArticle(values)
+      .then(() => {
+        $toast.success('New article created')
+      })
+      .catch((error) => {
+        $toast.error(error.message)
+      })
+      .finally(() => {
+        loading.value = false
+      })
   }
 
   function updateEditor(value) {
@@ -19,7 +40,12 @@
 <template>
   <h1>Add Article</h1>
   <hr />
-  <Form class="mb-5" @submit="onSubmit">
+
+  <div class="text-center m-3" v-show="loading">
+    <v-progress-circular indeterminate color="primary" />
+  </div>
+
+  <Form class="mb-5" @submit="onSubmit" v-show="!loading">
     <div class="mb-4">
       <Field name="game" v-slot="{ field, errors, errorMessage }">
         <input
@@ -60,7 +86,7 @@
     </div>
 
     <!-- WYSIWYG -->
-    <div clas="mb-4">
+    <div class="mb-4">
       <WYSIWYG @update="updateEditor" />
       <Field name="editor" v-model="veditor" v-slot="{ field, errors, errorMessage }">
         <input type="hidden" id="veditor" v-bind="field" />
@@ -71,7 +97,7 @@
     </div>
 
     <!-- 5-Raiting -->
-    <div class="my-4">
+    <div class="mb-4">
       <Field name="rating" value="Select a rating" v-slot="{ field, errors, errorMessage }">
         <select class="form-select" v-bind="field" :class="{ 'is-invalid': errors.length !== 0 }">
           <option value="Select a rating">Select a rating</option>
