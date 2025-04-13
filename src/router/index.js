@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '@/components/home/index.vue'
 import Signin from '@/components/user/SigninResgister.vue'
+import { isAuthenticated, isLoggedIn } from '@/composables/auth'
 
 //Dashboard routes
 import Dashboard from '@/components/user/dashboard/DashIndex.vue'
@@ -15,10 +16,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: Home },
-    { path: '/signin', name: 'signin', component: Signin },
+    { path: '/signin', name: 'signin', component: Signin, beforeEnter: isLoggedIn },
     {
       path: '/user/dashboard',
       component: Dashboard,
+      beforeEnter: isAuthenticated,
       children: [
         { path: '', component: DashMain, name: 'dashboard' },
         { path: 'profile', component: UserProfile, name: 'user_profile' },

@@ -18,5 +18,18 @@ export const firstLoad = () => {
     }
     loading.value = false
   })
-  return loading
+  return { loading }
+}
+
+export const isAuthenticated = () => {
+  let user = AUTH.currentUser
+  if (!user) return '/signin'
+  return true
+}
+
+export const isLoggedIn = () => {
+  let user = AUTH.currentUser
+  console.log(user)
+  if (user) return '/user/dashboard'
+  return true
 }

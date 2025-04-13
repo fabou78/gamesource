@@ -23,13 +23,13 @@
               </router-link>
             </li>
             <li class="nav-item" v-if="userStore.user.isAdmin">
-              <router-link class="nav-link" :to="{ name: 'admin_articles' }">
+              <router-link class="nav-link" :to="{ name: 'view_articles' }">
                 <v-icon icon="mdi-note-outline" />
                 Articles
               </router-link>
             </li>
             <li class="nav-item" v-if="userStore.user.isAdmin">
-              <router-link class="nav-link" :to="{ name: 'admin_add' }">
+              <router-link class="nav-link" :to="{ name: 'add_article' }">
                 <v-icon icon="mdi-note-edit-outline" />
                 Add articles
               </router-link>
