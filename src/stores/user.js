@@ -29,6 +29,16 @@ export const useUserStore = defineStore('user', {
       this.user = { ...this.user, ...user }
       this.isAuthenticated = true
     },
+    async autoSignIn(uid) {
+      try {
+        const userData = await this.getUserProfile(uid)
+        /// Update local state
+        this.setUserState(userData)
+        return true
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async getUserProfile(uid) {
       try {
         const userProfile = await getDoc(doc(FireDB, 'users', uid))
