@@ -20,6 +20,10 @@ import {
   Timestamp,
 } from 'firebase/firestore'
 
+// Toast
+import { useToast } from 'vue-toast-notification'
+const $toast = useToast()
+
 // import errorCodes from '@/utils/fbcodes'
 
 let articlesColl = collection(FireDB, 'articles')
@@ -32,6 +36,27 @@ export const useArticleStore = defineStore('article', {
   }),
   getters: {},
   actions: {
+    async updateArticle(id, formData) {
+      try {
+        const docRef = doc(FireDB, 'article', id)
+        await updateDoc(docRef, { ...formData })
+        $toast.success('Updated !!')
+      } catch (error) {
+        $toast.error(error.message)
+        throw new Error(error)
+      }
+    },
+    async getArticleById(id) {
+      try {
+        const docRef = await getDoc(doc(FireDB, 'articles', id))
+        if (!docRef.exists()) {
+          throw new Error('Could not find document')
+        }
+        return docRef.data()
+      } catch {
+        router.push({ name: '404' })
+      }
+    },
     async addArticle(formData) {
       try {
         // Get user profile

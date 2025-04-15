@@ -11,6 +11,7 @@ import UserProfile from '@/components/user/dashboard/pages/UserProfile.vue'
 import ViewArticle from '@/components/user/dashboard/admin/ViewArticle.vue'
 import AddArticle from '@/components/user/dashboard/admin/AddArticle.vue'
 import EditArticle from '@/components/user/dashboard/admin/EditArticle.vue'
+import NotFound from '@/components/404.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,7 @@ const router = createRouter({
         { path: 'articles/edit/:id', component: EditArticle, name: 'edit_article' },
       ],
     },
+    { path: '/:notFound(.*)*', component: NotFound, name: '404' },
   ],
 })
 

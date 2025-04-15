@@ -1,8 +1,10 @@
 <script setup>
   import { Editor, EditorContent } from '@tiptap/vue-3'
   import StarterKit from '@tiptap/starter-kit'
+  import { watch } from 'vue'
 
   const emit = defineEmits(['update'])
+  const props = defineProps(['content'])
   const editor = new Editor({
     content: '',
     extensions: [StarterKit],
@@ -10,6 +12,19 @@
       emit('update', editor.getHTML())
     },
   })
+
+  watch(
+    () => props.content,
+    () => {
+      loadContent()
+    },
+  )
+
+  function loadContent() {
+    if (props.content) {
+      editor.commands.setContent(props.content)
+    }
+  }
 </script>
 
 <template>
