@@ -80,5 +80,23 @@ export const useArticleStore = defineStore('article', {
         throw new Error(error)
       }
     },
+    async adminViewAticles(docLimit) {
+      try {
+        const myQuery = query(articlesColl, orderBy('timestamp', 'desc'), limit(docLimit))
+        const querySnapshot = await getDocs(myQuery)
+
+        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
+        const articles = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        /// Update admin article state
+        this.adminArticles = articles
+        this.adminLastVisible = lastVisible
+      } catch (error) {
+        $toast.error(error.message)
+        throw new Error(error)
+      }
+    },
   },
 })

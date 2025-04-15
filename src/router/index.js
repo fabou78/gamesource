@@ -8,7 +8,7 @@ import { isAuthenticated, isLoggedIn } from '@/composables/auth'
 import Dashboard from '@/components/user/dashboard/DashIndex.vue'
 import DashMain from '@/components/user/dashboard/DashMain.vue'
 import UserProfile from '@/components/user/dashboard/pages/UserProfile.vue'
-import ViewArticle from '@/components/user/dashboard/admin/ViewArticle.vue'
+import ViewArticles from '@/components/user/dashboard/admin/ViewArticles.vue'
 import AddArticle from '@/components/user/dashboard/admin/AddArticle.vue'
 import EditArticle from '@/components/user/dashboard/admin/EditArticle.vue'
 import NotFound from '@/components/404.vue'
@@ -25,7 +25,7 @@ const router = createRouter({
       children: [
         { path: '', component: DashMain, name: 'dashboard' },
         { path: 'profile', component: UserProfile, name: 'user_profile' },
-        { path: 'articles', component: ViewArticle, name: 'view_articles' },
+        { path: 'articles', component: ViewArticles, name: 'view_articles' },
         { path: 'articles/add', component: AddArticle, name: 'add_article' },
         { path: 'articles/edit/:id', component: EditArticle, name: 'edit_article' },
       ],
